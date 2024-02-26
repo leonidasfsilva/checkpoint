@@ -87,7 +87,7 @@
                             <ul class="dropdown-menu dropdown-navbar">
                                 <li class="dropdown-divider"></li>
                                 <li class="nav-link">
-                                    <a href="<?= base_url('app/logoff') ?>" class="nav-item dropdown-item">Sair</a>
+                                    <a href="<?= base_url('app/logoff') ?>" class="nav-item dropdown-item">Sair do Sistema</a>
                                 </li>
                             </ul>
                         </li>

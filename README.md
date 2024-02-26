@@ -1,47 +1,50 @@
-# API para locadora de carros
-Projeto esboço para locadora de veículos baseado em **[Laravel 10 + Docker + MySQL]**
+# CheckPoint - Sistema para Controle de Ponto
+###### Projeto esboço para sistema de controle de ponto de funcionários utilizando as stacks: 
+
+* CodeIgniter 4 
+* Boostrap 4 
+* Docker 
+* MySQL
+
+###### Sistema totalmente responsivo para dispositivos móveis (tablets e smartphones)
 
 
 ## Configurando o projeto
 Clone o projeto para o seu localhost
 ```sh
-git clone https://github.com/leonidasfsilva/api-locadora-carros.git api-carros
+git clone https://gitlab.com/codeigniter4.4.6/checkpoint.git checkpoint
 ```
 Acesse a pasta do projeto
 ```sh
-cd api-carros
+cd checkpoint
 ```
 
 
-Crie o arquivo .env copiando a partir de exemplo
+Crie o arquivo *.env* copiando a partir do modelo *env*
 ```sh
-cp .env.example .env
+cp env .env
 ```
 
 
-Atualize essas variáveis de ambiente no arquivo .env
+As variáveis de ambiente contidas no arquivo _.env_ gerado já estão configuradas para a correta execução via container Docker, <br>
+caso queira executar o projeto via localhost (Wamp, Xamp ou PHP Built-In) realize os ajustes necessários
 ```dosini
-APP_NAME="API-Carros"
-APP_URL=http://localhost:8989
+CI_ENVIRONMENT=development
+appName='CheckPoint'
+appPort='8080'
+app_baseURL='http://localhost/checkpoint/public/'
 
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=nome_database
-DB_USERNAME=nome_usuario
-DB_PASSWORD=senha_database
-
-CACHE_DRIVER=redis
-QUEUE_CONNECTION=redis
-SESSION_DRIVER=redis
-
-REDIS_HOST=redis
-REDIS_PASSWORD=null
-REDIS_PORT=6379
+database_default_hostname=db
+database_default_database=checkpoint
+database_default_username=root
+database_default_password=root
+database_default_DBDriver=MySQLi
+database_default_DBPrefix=
+database_default_port=3306
 ```
 
 
-Suba os containers do projeto
+Suba o container do projeto
 ```sh
 docker-compose up -d
 ```
@@ -54,107 +57,38 @@ Instale as dependências do projeto
 ```sh
 composer install
 ```
-Gere a key do projeto
+Execute as *migrations* do CodeIgniter para criar as tabelas
 ```sh
-php artisan key:generate
+php spark migrate
 ```
-Rode as *migrations* do Laravel para criar as tabelas
+Execute a *Seeder* necessária para uma das tabelas do projeto
 ```sh
-php artisan migrate
-```
-Caso queira popular as tabelas, rode as *Seeders* do Laravel
-```sh
-php artisan db:seed
+php spark db:seed checkpointtypes
 ```
 
-## Acessando os endpoints da API
+### Acesse o sistema através da URL
+
+### [http://localhost:8080](http://localhost:8080)
 
 
-### Veículos
------
-**[GET]**
-http://localhost:8989/api/cars - lista todos os veículos cadastrados
+# Instruções do Sistema
 
-**[GET]**
-http://localhost:8989/api/cars/details/**{id}** - lista os dados de um veículo **(id do veículo deve ser informado na URL)**
+### Acesse a rota de cadastro de usuários e efetue seu cadastro:
 
-**[POST]**
-http://localhost:8989/api/cars/add - cadastra um novo veículo, abaixo a exemplificação do json enviado na requisição
-```sh
-{
-	"model": "Ecosport",
-	"brand": "Ford",
-	"plate": "JPL4I96"
-}
-```
+### [http://localhost:8080/users/register](http://localhost:8080/users/register)
 
-**[PUT]**
-http://localhost:8989/api/cars/edit/**{id}** - atualiza os dados de um veículo **(id do veículo deve ser informado na URL)**, abaixo a exemplificação do json enviado na requisição
-```sh
-{
-	"model": "Compass",
-	"brand": "Jeep",
-	"plate": "LLL3J85"
-}
-```
+-----------
+### Após se cadastrar, efetue seu login:
 
-**[DEL]**
-http://localhost:8989/api/cars/remove/**{id}** - remove o cadastro de um veículo **(id do veículo deve ser informado na URL)**
+### [http://localhost:8080/app/login](http://localhost:8080/app/login)
 
+-----------
 
+### Uma vez dentro da area restrita (Home), faça uma marcação de ponto clicando no botão: 
+###### _"Clique aqui para marcar seu ponto"_
 
-### Usuários
------
-**[GET]**
-http://localhost:8989/api/users - lista todos os usuários cadastrados
+-----------
 
-**[GET]**
-http://localhost:8989/api/users/details/**{id}** - lista os dados de um usuário **(id do usuário deve ser informado na URL)**
-
-**[POST]**
-http://localhost:8989/api/users/add - cadastra um novo usuário, abaixo a exemplificação do json enviado na requisição
-```sh
-{
-	"name": "Nome Sobrenome",
-	"email": "email@exemplo.com"
-}
-```
-
-**[PUT]**
-http://localhost:8989/api/users/edit/**{id}** - atualiza os dados de um usuário **(id do usuário deve ser informado na URL)**, abaixo a exemplificação do json enviado na requisição
-```sh
-{
-	"name": "Nome Sobrenome",
-	"email": "novoemail@exemplo.com"
-}
-```
-
-**[DEL]**
-http://localhost:8989/api/users/remove/**{id}** - remove o cadastro de um usuário **(id do usuário deve ser informado na URL)**
-
-
-### Aluguéis
------
-**[GET]**
-http://localhost:8989/api/rents/user/{id} - lista todos os veículos alugados por um usuário **(id do usuário deve ser informado na URL)**
-
-
-**[POST]**
-http://localhost:8989/api/rents/add - registra um novo aluguel de um veículo para um usuário, abaixo a exemplificação do json enviado na requisição
-```sh
-{
-	"id_user": 4,
-	"id_car": 11
-}
-```
-
-**[POST]**
-http://localhost:8989/api/rents/return - remove o registro de aluguel de um veículo de um usuário
-```sh
-{
-	"id_user": 4,
-	"id_car": 11
-}
-```
-
+### Para visualizar o histórico de marcações, clique no botão: 
+###### _"Histórico de Registro"_
 

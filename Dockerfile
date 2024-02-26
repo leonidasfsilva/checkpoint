@@ -35,15 +35,15 @@ RUN docker-php-ext-install mysqli pdo_mysql mbstring exif pcntl bcmath gd socket
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
+# Create system user to run Composer commands
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
 # Install redis
-RUN pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis
+#RUN pecl install -o -f redis \
+#    &&  rm -rf /tmp/pear \
+#    &&  docker-php-ext-enable redis
 
 # Set working directory
 WORKDIR /var/www
@@ -52,7 +52,7 @@ WORKDIR /var/www
 COPY docker/php/php.ini /usr/local/etc/php/
 
 # Install Xdebug on Docker container
-RUN pecl install -o -f xdebug \
-    && docker-php-ext-enable xdebug
+#RUN pecl install -o -f xdebug \
+#    && docker-php-ext-enable xdebug
 
 USER $user

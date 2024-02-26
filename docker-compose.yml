@@ -12,7 +12,6 @@ services:
             - ./:/var/www
         networks:
             - network-app
-#        entrypoint: "php -S 0.0.0.0:80"
 
     # nginx
     nginx:
@@ -46,27 +45,27 @@ services:
             - network-app
 
     # phpMyAdmin
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        links:
-            - db
-        environment:
-            PMA_HOST: db
-        restart: always
-        ports:
-            - "8888:80"
-        depends_on:
-            - db
-        networks:
-            - network-app
+#    phpmyadmin:
+#        image: phpmyadmin/phpmyadmin
+#        links:
+#            - db
+#        environment:
+#            PMA_HOST: db
+#        restart: always
+#        ports:
+#            - "8888:80"
+#        depends_on:
+#            - db
+#        networks:
+#            - network-app
 
     # redis
-    redis:
-        image: redis:7.0
-        ports:
-            - '6379:6379'
-        networks:
-            - network-app
+#    redis:
+#        image: redis:7.0
+#        ports:
+#            - '6379:6379'
+#        networks:
+#            - network-app
 
 networks:
     network-app:
