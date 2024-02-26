@@ -1,0 +1,72 @@
+version: "3.7"
+
+services:
+    # image project
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - network-app
+
+    # nginx
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        ports:
+            - '8080:80'
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - network-app
+
+    # db mysql
+    db:
+        image: mysql:5.7.22
+        platform: linux/x86_64
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${database_default_database:-checkpoint}
+            MYSQL_ROOT_PASSWORD: ${database_default_password:-root}
+            MYSQL_PASSWORD: ${database_default_password:-root}
+            MYSQL_USER: ${database_default_username:-root}
+        volumes:
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - "3309:3306"
+        networks:
+            - network-app
+
+    # phpMyAdmin
+#    phpmyadmin:
+#        image: phpmyadmin/phpmyadmin
+#        links:
+#            - db
+#        environment:
+#            PMA_HOST: db
+#        restart: always
+#        ports:
+#            - "8888:80"
+#        depends_on:
+#            - db
+#        networks:
+#            - network-app
+
+    # redis
+#    redis:
+#        image: redis:7.0
+#        ports:
+#            - '6379:6379'
+#        networks:
+#            - network-app
+
+networks:
+    network-app:
+        driver: bridge
