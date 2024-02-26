@@ -2,7 +2,7 @@
 ###### Projeto esboço para sistema de controle de ponto de funcionários utilizando as stacks: 
 
 * CodeIgniter 4 
-* Boostrap 4 
+* Bootstrap 4 
 * Docker 
 * MySQL
 
