@@ -18,7 +18,7 @@ class CheckpointTypes extends Seeder
         $dataList = [
             [
                 'label'       => 'ENTRADA',
-                'description' => 'Registra o início do expediente do colaborador na empresa',
+                'description' => 'Registra o início do expediente do colaborador',
             ],
             [
                 'label'       => 'PAUSA ALMOÇO',
@@ -30,7 +30,7 @@ class CheckpointTypes extends Seeder
             ],
             [
                 'label'       => 'SAÍDA',
-                'description' => 'Registra o término do expediente do colaborador da empresa',
+                'description' => 'Registra o término do expediente do colaborador',
             ],
         ];
 
