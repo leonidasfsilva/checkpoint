@@ -86,9 +86,6 @@ phpunit
 #-------------------------
 vendor/
 
-# Don't save the Database configs on version control.
-app/Config/Database.php
-
 #-------------------------
 # IDE / Development Files
 #-------------------------
